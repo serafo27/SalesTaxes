@@ -1,12 +1,10 @@
 package com.lastminute.SalesTaxes.model;
 
-import java.math.BigDecimal;
 import com.lastminute.SalesTaxes.model.enums.GoodsType;
 
 public class Item {
 
 	private String description;
-	private BigDecimal unitaryPrice;
 	private GoodsType type;
 	
 	public Item(String description, GoodsType type) {
@@ -23,4 +21,10 @@ public class Item {
 		return type;
 	}
 	
+	
+	@Override
+	public String toString() {
+
+		return description;
+	}
 }

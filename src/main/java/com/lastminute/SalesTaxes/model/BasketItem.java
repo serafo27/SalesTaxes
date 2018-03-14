@@ -33,4 +33,9 @@ public class BasketItem {
 		return item;
 	}
 	
+	@Override
+	public String toString() {
+		
+		return ((imported) ? "imported " : "") + item;
+	}
 }
