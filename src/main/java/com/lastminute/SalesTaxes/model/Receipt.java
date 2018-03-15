@@ -13,8 +13,8 @@ public class Receipt {
 	public Receipt() {
 		
 		this.receiptItems = new ArrayList<ReceiptItem>();
-		this.salesTaxes = new BigDecimal(0d);
-		this.total = new BigDecimal(0d);
+		this.salesTaxes = new BigDecimal("0.00");
+		this.total = new BigDecimal("0.00");
 	}
 	
 	public void addReceiptItem(ReceiptItem receiptItem) {
