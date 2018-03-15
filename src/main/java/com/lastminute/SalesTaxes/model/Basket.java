@@ -1,6 +1,5 @@
 package com.lastminute.SalesTaxes.model;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +12,9 @@ public class Basket {
 		this.items = new ArrayList<BasketItem>();
 	}
 	
-	public void addItem(int quantity, BigDecimal unitaryPrice, boolean imported, Item item) {
+	public void addBasketItem(BasketItem basketItem) {
 		
-		items.add(new BasketItem(quantity, unitaryPrice, imported, item));
+		items.add(basketItem);
 	}
 	
 	public List<BasketItem> getItems() {

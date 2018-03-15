@@ -26,11 +26,19 @@ public class BasicItemTaxCalculator implements ItemTaxCalculator {
 		BigDecimal baseTaxAmount = new BigDecimal("0.00");
 		BigDecimal importTaxAmount = new BigDecimal("0.00");
 		
-		if(item.getItem().GetGoodsType() == GoodsType.OTHER)
+		if(item.getItem().GetGoodsType() == GoodsType.OTHER) {
+			
 			baseTaxAmount = calculator.multiply(basePrice, itemTaxRetriver.getBasicTaxPercentage());
+			baseTaxAmount = calculator.roundToNearestZeroZeroFive(baseTaxAmount);
+			baseTaxAmount = calculator.scaleToTwoDecimal(baseTaxAmount);
+		}
 		
-		if(item.isImported())
+		if(item.isImported()) {
+			
 			importTaxAmount = calculator.multiply(basePrice, itemTaxRetriver.getImportTaxPercentage());
+			importTaxAmount = calculator.roundToNearestZeroZeroFive(importTaxAmount);
+			importTaxAmount = calculator.scaleToTwoDecimal(importTaxAmount);
+		}
 
 		return calculator.add(baseTaxAmount, importTaxAmount);
 	}

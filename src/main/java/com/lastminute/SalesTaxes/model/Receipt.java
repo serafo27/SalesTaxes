@@ -41,4 +41,16 @@ public class Receipt {
 		return receiptItems;
 	}
 	
+	@Override
+	public String toString() {
+		
+		StringBuilder sb = new StringBuilder();
+		for(ReceiptItem item : receiptItems)
+			sb.append(item + "\n");
+		sb.append("Sales Taxes: " + salesTaxes + "\n");
+		sb.append("Total: " + total + "\n");
+		
+		return sb.toString();
+	}
+	
 }

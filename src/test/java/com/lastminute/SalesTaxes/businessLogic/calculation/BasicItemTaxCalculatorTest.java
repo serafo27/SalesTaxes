@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import com.lastminute.SalesTaxes.businessLogic.calculation.concrete.BasicItemTaxCalculator;
 import com.lastminute.SalesTaxes.businessLogic.calculation.concrete.BasicItemTaxRetriver;
-import com.lastminute.SalesTaxes.businessLogic.calculation.concrete.TwoDecimalCalculator;
+import com.lastminute.SalesTaxes.businessLogic.calculation.concrete.BasicDecimalCalculator;
 import com.lastminute.SalesTaxes.model.BasketItem;
 import com.lastminute.SalesTaxes.model.Item;
 import com.lastminute.SalesTaxes.model.enums.GoodsType;
@@ -24,7 +24,7 @@ public class BasicItemTaxCalculatorTest {
 	public static void Init()
 	{
 		itemTaxRetriver = new BasicItemTaxRetriver();
-		calculator = new TwoDecimalCalculator();
+		calculator = new BasicDecimalCalculator();
 		itemTaxCalulator = new BasicItemTaxCalculator(itemTaxRetriver, calculator);
 	}
 	
@@ -33,7 +33,7 @@ public class BasicItemTaxCalculatorTest {
 	public void calculateItemTaxAmount_BookItemNotImported_ZeroTax() {
 		
 		// Setup
-		Item item = new Item("item1", GoodsType.BOOKS);
+		Item item = new Item("item1", GoodsType.BOOK);
 		BasketItem basketItem = new BasketItem(1, new BigDecimal("10.00"), false, item);
 		
 		BigDecimal expected = new BigDecimal("0.00");
@@ -105,7 +105,7 @@ public class BasicItemTaxCalculatorTest {
 	public void calculateItemTaxAmount_BookItemImported_ImportedTax() {
 		
 		// Setup
-		Item item = new Item("item1", GoodsType.BOOKS);
+		Item item = new Item("item1", GoodsType.BOOK);
 		BasketItem basketItem = new BasketItem(1, new BigDecimal("10.00"), true, item);
 		
 		BigDecimal expected = new BigDecimal("0.50");

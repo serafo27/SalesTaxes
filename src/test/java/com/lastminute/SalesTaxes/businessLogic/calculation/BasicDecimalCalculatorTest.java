@@ -9,9 +9,9 @@ import java.text.DecimalFormat;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.lastminute.SalesTaxes.businessLogic.calculation.concrete.TwoDecimalCalculator;
+import com.lastminute.SalesTaxes.businessLogic.calculation.concrete.BasicDecimalCalculator;
 
-public class DecimalCalculatorTest {
+public class BasicDecimalCalculatorTest {
 
 	private static DecimalFormat decimalFormat;
 	private static Calculator calculator;
@@ -19,42 +19,38 @@ public class DecimalCalculatorTest {
 	@BeforeClass
 	public static void Init()
 	{
-		calculator = new TwoDecimalCalculator();
+		calculator = new BasicDecimalCalculator();
 		
 		decimalFormat = new DecimalFormat();
 		decimalFormat.setMinimumFractionDigits(2);
 	}
 	
 	
-	@Test
-	public void add_TwoNumberWithFiveDecimal_NumberWithTwoDecimal() {
-		
+	
+	public void roundToNearestZeroZeroFive_PositiveNumbers_correctlyRounded() {
 		// Setup
-		BigDecimal num1 = new BigDecimal("10.11123");
-		BigDecimal num2 = new BigDecimal("10.11929");
-		BigDecimal expected = new BigDecimal("20.23");
+		BigDecimal num1 = new BigDecimal("0.5625");
+		BigDecimal num2 = new BigDecimal("1.0");
+		BigDecimal num3 = new BigDecimal("4.75");
+		BigDecimal num4 = new BigDecimal("2.375");
+		BigDecimal expected1 = new BigDecimal("0.55");
+		BigDecimal expected2 = new BigDecimal("1.0");
+		BigDecimal expected3 = new BigDecimal("4.75");
+		BigDecimal expected4 = new BigDecimal("2.35");
 		
 		// SUT
-		BigDecimal actual = calculator.add(num1, num2);
+		BigDecimal actual1 = calculator.roundToNearestZeroZeroFive(num1);
+		BigDecimal actual2 = calculator.roundToNearestZeroZeroFive(num2);
+		BigDecimal actual3 = calculator.roundToNearestZeroZeroFive(num3);
+		BigDecimal actual4 = calculator.roundToNearestZeroZeroFive(num4);
 		
 		// Assert
-		assertEquals(decimalFormat.format(expected), decimalFormat.format(actual));
+		assertEquals(decimalFormat.format(expected1), decimalFormat.format(actual1));
+		assertEquals(decimalFormat.format(expected2), decimalFormat.format(actual2));
+		assertEquals(decimalFormat.format(expected3), decimalFormat.format(actual3));
+		assertEquals(decimalFormat.format(expected4), decimalFormat.format(actual4));
 	}
 	
-	@Test
-	public void multiply_TwoNumberWithFiveDecimal_NumberWithTwoDecimal() {
-		
-		// Setup
-		BigDecimal num1 = new BigDecimal("4.11123");
-		BigDecimal num2 = new BigDecimal("4.11921");
-		BigDecimal expected = new BigDecimal("16.94");
-		
-		// SUT
-		BigDecimal actual = calculator.multiply(num1, num2);
-		
-		// Assert
-		assertEquals(decimalFormat.format(expected), decimalFormat.format(actual));
-	}
 	
 	
 	@Test

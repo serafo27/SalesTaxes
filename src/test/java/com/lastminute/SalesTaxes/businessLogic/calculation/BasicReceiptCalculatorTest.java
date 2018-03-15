@@ -10,8 +10,9 @@ import org.junit.Test;
 import com.lastminute.SalesTaxes.businessLogic.calculation.concrete.BasicItemTaxCalculator;
 import com.lastminute.SalesTaxes.businessLogic.calculation.concrete.BasicItemTaxRetriver;
 import com.lastminute.SalesTaxes.businessLogic.calculation.concrete.BasicReceiptCalculator;
-import com.lastminute.SalesTaxes.businessLogic.calculation.concrete.TwoDecimalCalculator;
+import com.lastminute.SalesTaxes.businessLogic.calculation.concrete.BasicDecimalCalculator;
 import com.lastminute.SalesTaxes.model.Basket;
+import com.lastminute.SalesTaxes.model.BasketItem;
 import com.lastminute.SalesTaxes.model.Item;
 import com.lastminute.SalesTaxes.model.Receipt;
 import com.lastminute.SalesTaxes.model.enums.GoodsType;
@@ -26,7 +27,7 @@ public class BasicReceiptCalculatorTest {
 	@BeforeClass
 	public static void Init() {
 		
-		calculator = new TwoDecimalCalculator();
+		calculator = new BasicDecimalCalculator();
 		itemTaxRetriver = new BasicItemTaxRetriver();
 		itemTaxCalculator = new BasicItemTaxCalculator(itemTaxRetriver, calculator);
 		receiptCalculator = new BasicReceiptCalculator(itemTaxCalculator, calculator);
@@ -39,16 +40,22 @@ public class BasicReceiptCalculatorTest {
 	public void generateReceipt_MixedItems_CorrectResult() {
 		
 		// Setup
-		Item bookItem = new Item("book", GoodsType.BOOKS);
+		Item bookItem = new Item("book", GoodsType.BOOK);
 		Item foodItem = new Item("food", GoodsType.FOOD);
 		Item otherItem = new Item("other", GoodsType.OTHER);
 		
 		Basket basket = new Basket();
-		basket.addItem(1, new BigDecimal("10.00"), false, bookItem);
-		basket.addItem(1, new BigDecimal("10.00"), false, foodItem);
-		basket.addItem(1, new BigDecimal("10.00"), false, otherItem);
-		basket.addItem(1, new BigDecimal("10.00"), true, foodItem);
-		basket.addItem(1, new BigDecimal("10.00"), true, otherItem);
+		BasketItem basketItem1 = new BasketItem(1, new BigDecimal("10.00"), false, bookItem);
+		BasketItem basketItem2 = new BasketItem(1, new BigDecimal("10.00"), false, foodItem);
+		BasketItem basketItem3 = new BasketItem(1, new BigDecimal("10.00"), false, otherItem);
+		BasketItem basketItem4 = new BasketItem(1, new BigDecimal("10.00"), true, foodItem);
+		BasketItem basketItem5 = new BasketItem(1, new BigDecimal("10.00"), true, otherItem);
+		
+		basket.addBasketItem(basketItem1);
+		basket.addBasketItem(basketItem2);
+		basket.addBasketItem(basketItem3);
+		basket.addBasketItem(basketItem4);
+		basket.addBasketItem(basketItem5);
 		
 		BigDecimal expectedBookAmount = new BigDecimal("10.00");
 		BigDecimal expectedFoodAmount = new BigDecimal("10.00");

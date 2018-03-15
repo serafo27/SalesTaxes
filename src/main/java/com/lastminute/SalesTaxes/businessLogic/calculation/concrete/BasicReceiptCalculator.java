@@ -34,6 +34,9 @@ public class BasicReceiptCalculator implements ReceiptCalculator{
 			BigDecimal taxedItemAmount = calculator.add(basketItem.getUnitaryPrice(), taxAmount);
 			BigDecimal totalItemAmount = calculator.multiply(taxedItemAmount, new BigDecimal(basketItem.getQuantity()));
 			
+			taxedItemAmount = calculator.scaleToTwoDecimal(taxedItemAmount);
+			totalItemAmount = calculator.scaleToTwoDecimal(totalItemAmount);
+			
 			int quantity = basketItem.getQuantity();
 			ReceiptItem receiptItem = new ReceiptItem(quantity, totalItemAmount, basketItem);
 			
@@ -42,6 +45,9 @@ public class BasicReceiptCalculator implements ReceiptCalculator{
 			
 			result.addReceiptItem(receiptItem);
 		}
+		
+		salesTaxes = calculator.scaleToTwoDecimal(salesTaxes);
+		total = calculator.scaleToTwoDecimal(total);
 		
 		result.setSalesTaxes(salesTaxes);
 		result.setTotal(total);
